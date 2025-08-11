@@ -1,0 +1,97 @@
+{% extends 'index.html' %}
+
+{% block body %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card glass-card p-4 shadow-lg border-0 animate__animated animate__fadeIn">
+                <h2 class="text-center mb-4 fw-bold text-primary"><i class="fas fa-info-circle me-2"></i>Document Scanner Web Application</h2>
+            <p class="lead text-center mb-4">
+                This web application allows you to extract structured information from document images using advanced 
+                computer vision and natural language processing techniques. Perfect for processing business cards and extracting useful information.
+            </p>
+            <hr class="my-4">
+                <h3 class="mb-4 text-success fw-bold"><i class="fas fa-question-circle me-2"></i>How to Use</h3>
+            <div class="usage-steps row mb-4">
+                <div class="step col-md-4 mb-3">
+                        <div class="card h-100 glass-card border-info animate__animated animate__fadeInUp">
+                        <div class="card-header bg-info text-white">
+                                <h4 class="mb-0"><i class="fas fa-upload me-2"></i>Step 1: Upload Your Document</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="pl-3">
+                                <li>Click "Choose File" to upload your document image</li>
+                                    <li>Select your preferred OCR method: Pytesseract (traditional), Qwen2 AI (advanced), or Azure Document Intelligence (cloud-based)</li>
+                                <li>If using Qwen2, make sure to load the model first</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="step col-md-4 mb-3">
+                        <div class="card h-100 glass-card border-info animate__animated animate__fadeInUp">
+                        <div class="card-header bg-info text-white">
+                                <h4 class="mb-0"><i class="fas fa-vector-square me-2"></i>Step 2: Adjust Document Boundaries</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="pl-3">
+                                <li>The system will automatically detect document corners</li>
+                                <li>You can drag the corner points to adjust if needed</li>
+                                <li>Click "Transform" to correct the perspective and enhance the image</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="step col-md-4 mb-3">
+                        <div class="card h-100 glass-card border-info animate__animated animate__fadeInUp">
+                        <div class="card-header bg-info text-white">
+                                <h4 class="mb-0"><i class="fas fa-eye me-2"></i>Step 3: View Extracted Information</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="pl-3">
+                                <li>The system extracts and categorizes information into key entities</li>
+                                <li>Entity types include: NAME, ORGANIZATION, DESIGNATION, PHONE, EMAIL, and WEBSITE</li>
+                                <li>The processed image shows bounding boxes around detected text</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+                <h3 class="mb-4 text-primary fw-bold"><i class="fas fa-microchip me-2"></i>Technologies</h3>
+            <div class="tech-stack row mb-4">
+                <div class="tech-category col-md-6 mb-3">
+                        <div class="card h-100 glass-card animate__animated animate__fadeInUp">
+                        <div class="card-header bg-primary text-white">
+                                <h4 class="mb-0"><i class="fas fa-brain me-2"></i>Computer Vision</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li>OpenCV - Document detection and image processing</li>
+                                <li>Pytesseract - Optical Character Recognition</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="tech-category col-md-6 mb-3">
+                        <div class="card h-100 glass-card animate__animated animate__fadeInUp">
+                        <div class="card-header bg-success text-white">
+                                <h4 class="mb-0"><i class="fas fa-language me-2"></i>Natural Language Processing</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul>
+                                <li>SpaCy - Named Entity Recognition</li>
+                                <li>Qwen2-VL - Advanced AI for integrated image and text understanding</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-info my-4">
+                <strong>Note:</strong> For best results, ensure your document has good lighting and is free from 
+                excessive glare or shadows. The application works best with clearly printed text.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

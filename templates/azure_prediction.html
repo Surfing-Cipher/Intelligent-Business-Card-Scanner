@@ -1,0 +1,254 @@
+{% extends 'index.html' %}
+
+{% block body %}
+<div class="container py-5">
+    <!-- Back navigation -->
+    <div class="mb-4">
+        <a href="/" class="btn btn-gradient">
+            <i class="fas fa-arrow-left me-2"></i>Back to Scanner
+        </a>
+    </div>
+
+    <!-- Page Title -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h2 class="section-title text-primary fw-bold">
+                <i class="fas fa-file-alt me-2"></i>Azure Document Intelligence Results
+            </h2>
+            <p class="lead text-muted">View your processed business card information below</p>
+        </div>
+    </div>
+
+    <!-- Main Content Section -->
+    <div class="row">
+        <!-- Original Image Section -->
+        <div class="col-md-5 mb-4">
+            <div class="card glass-card h-100 animate__animated animate__fadeInLeft">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-file-image me-2"></i>Original Document
+                </div>
+                <div class="card-body p-2 text-center">
+                    <img class="img-fluid rounded shadow" src="/static/media/upload.jpg" alt="Original document image">
+                </div>
+                <div class="card-footer bg-light">
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle me-1"></i>Original business card image
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Extracted Information Section -->
+        <div class="col-md-7 mb-4">
+            <div class="card glass-card h-100 animate__animated animate__fadeInRight">
+                <div class="card-header bg-success text-white">
+                    <i class="fas fa-file-alt me-2"></i>Extracted Information
+                </div>
+                <div class="card-body">
+                    {% if results.error %}
+                    <div class="alert alert-danger">
+                        <i class="fas fa-exclamation-circle me-2"></i>{{ results.error }}
+                    </div>
+                    {% else %}
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th scope="col" style="width: 30%">
+                                        <i class="fas fa-tag me-2"></i>Field Type
+                                    </th>
+                                    <th scope="col">
+                                        <i class="fas fa-text-width me-2"></i>Extracted Value
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if results.entities %}
+                                    {% if results.entities.name %}
+                                    <tr>
+                                        <td class="fw-bold text-primary">Name</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-user text-success me-2"></i>
+                                                {% if results.entities.name.firstName %}
+                                                    {{ results.entities.name.firstName }}
+                                                {% endif %}
+                                                {% if results.entities.name.lastName %}
+                                                    {{ results.entities.name.lastName }}
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+
+                                    {% if results.entities.jobTitle %}
+                                    <tr>
+                                        <td class="fw-bold text-primary">Job Title</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-briefcase text-success me-2"></i>
+                                                {{ results.entities.jobTitle|join(', ') }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+
+                                    {% if results.entities.company %}
+                                    <tr>
+                                        <td class="fw-bold text-primary">Company</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-building text-success me-2"></i>
+                                                {{ results.entities.company|join(', ') }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+
+                                    {% if results.entities.address %}
+                                    <tr>
+                                        <td class="fw-bold text-primary">Address</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-map-marker-alt text-success me-2"></i>
+                                                {{ results.entities.address|join(', ') }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+
+                                    {% if results.entities.phone %}
+                                    <tr>
+                                        <td class="fw-bold text-primary">Phone</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-phone text-success me-2"></i>
+                                                {{ results.entities.phone|join(', ') }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+
+                                    {% if results.entities.fax %}
+                                    <tr>
+                                        <td class="fw-bold text-primary">Fax</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-fax text-success me-2"></i>
+                                                {{ results.entities.fax|join(', ') }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+
+                                    {% if results.entities.email %}
+                                    <tr>
+                                        <td class="fw-bold text-primary">Email</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-envelope text-success me-2"></i>
+                                                {{ results.entities.email|join(', ') }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+
+                                    {% if results.entities.website %}
+                                    <tr>
+                                        <td class="fw-bold text-primary">Website</td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                <i class="fas fa-globe text-success me-2"></i>
+                                                {{ results.entities.website|join(', ') }}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                {% endif %}
+
+                                {% if results.raw_text %}
+                                <tr>
+                                    <td class="fw-bold text-primary">Raw Text</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-file-alt text-success me-2"></i>
+                                            <pre class="mb-0">{{ results.raw_text }}</pre>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <a href="/" class="btn btn-gradient me-2 animate__animated animate__pulse">
+                <i class="fas fa-camera me-2"></i>Scan Another Document
+            </a>
+            <button onclick="window.print()" class="btn btn-outline-secondary animate__animated animate__pulse">
+                <i class="fas fa-print me-2"></i>Print Results
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .glass-card {
+        background: rgba(255,255,255,0.7) !important;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18) !important;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-radius: 20px !important;
+        border: 1px solid rgba(255,255,255,0.18) !important;
+    }
+    .btn-gradient {
+        background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%) !important;
+        color: #fff !important;
+        border: none !important;
+        box-shadow: 0 4px 15px rgba(67, 206, 162, 0.15);
+        transition: background 0.3s, transform 0.2s;
+    }
+    .btn-gradient:hover, .btn-gradient:focus {
+        background: linear-gradient(90deg, #185a9d 0%, #43cea2 100%) !important;
+        transform: translateY(-2px) scale(1.03);
+        color: #fff !important;
+    }
+    .section-title {
+        border-bottom: 2px solid #0d6efd;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        letter-spacing: 0.5px;
+    }
+    .table td, .table th {
+        vertical-align: middle;
+    }
+    .card {
+        margin-bottom: 0 !important;
+    }
+    pre {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        background: rgba(0,0,0,0.03);
+        padding: 10px;
+        border-radius: 5px;
+        margin: 0;
+    }
+    @media print {
+        .btn {
+            display: none;
+        }
+    }
+    @media (max-width: 768px) {
+        .col-md-5, .col-md-7 {
+            width: 100%;
+        }
+    }
+</style>
+{% endblock %} 

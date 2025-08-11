@@ -1,0 +1,161 @@
+{% extends 'index.html' %}
+
+{% block body %}
+<div class="container py-5">
+    <!-- Back navigation -->
+    <div class="mb-4">
+        <a href="/" class="btn btn-gradient">
+            <i class="fas fa-arrow-left me-2"></i>Back to Scanner
+        </a>
+    </div>
+
+    <!-- Page Title -->
+    <div class="row mb-5">
+        <div class="col-12 text-center">
+            <h2 class="section-title text-primary fw-bold"><i class="fas fa-file-alt me-2"></i>Document Analysis Results</h2>
+            <p class="lead text-muted">View your processed document and extracted information below</p>
+        </div>
+    </div>
+
+    <!-- Processed Images Section -->
+    <div class="row mb-5">
+        <div class="col-12 mb-4">
+            <h3 class="h4 mb-4 border-bottom pb-2 text-primary">
+                <i class="fas fa-image me-2"></i>Processed Images
+            </h3>
+        </div>
+        <!-- Original Processed Image -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 glass-card animate__animated animate__fadeInUp">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-magic me-2"></i>Enhanced Image
+                </div>
+                <div class="card-body p-2 text-center">
+                    <img class="img-fluid rounded shadow" src="/static/media/magic_color.jpg" alt="Enhanced document image">
+                </div>
+                <div class="card-footer bg-light">
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle me-1"></i>Image with enhanced clarity and color correction
+                    </small>
+                </div>
+            </div>
+        </div>
+        <!-- Annotated Image -->
+        <div class="col-md-6 mb-4">
+            <div class="card h-100 glass-card animate__animated animate__fadeInUp">
+                <div class="card-header bg-primary text-white">
+                    <i class="fas fa-box me-2"></i>Detected Fields
+                </div>
+                <div class="card-body p-2 text-center">
+                    <img class="img-fluid rounded shadow" src="/static/media/bounding_box.jpg" alt="Annotated document image">
+                </div>
+                <div class="card-footer bg-light">
+                    <small class="text-muted">
+                        <i class="fas fa-info-circle me-1"></i>Image with detected fields highlighted
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Extracted Information Section -->
+    <div class="row">
+        <div class="col-12 mb-4">
+            <h3 class="h4 mb-4 border-bottom pb-2 text-success">
+                <i class="fas fa-file-alt me-2"></i>Extracted Information
+            </h3>
+        </div>
+        <div class="col-12">
+            <div class="card glass-card animate__animated animate__fadeIn">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-primary">
+                                <tr>
+                                    <th scope="col" style="width: 30%">
+                                        <i class="fas fa-tag me-2"></i>Field Type
+                                    </th>
+                                    <th scope="col">
+                                        <i class="fas fa-text-width me-2"></i>Extracted Value
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for key, value in results.items() %}
+                                <tr>
+                                    <td class="fw-bold text-primary">{{ key }}</td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <i class="fas fa-check-circle text-success me-2"></i>
+                                            {{ value }}
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="row mt-5">
+        <div class="col-12 text-center">
+            <a href="/" class="btn btn-gradient me-2 animate__animated animate__pulse">
+                <i class="fas fa-camera me-2"></i>Scan Another Document
+            </a>
+            <button onclick="window.print()" class="btn btn-outline-secondary animate__animated animate__pulse">
+                <i class="fas fa-print me-2"></i>Print Results
+            </button>
+        </div>
+    </div>
+</div>
+
+<style>
+    .glass-card {
+        background: rgba(255,255,255,0.7) !important;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18) !important;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border-radius: 20px !important;
+        border: 1px solid rgba(255,255,255,0.18) !important;
+    }
+    .btn-gradient {
+        background: linear-gradient(90deg, #43cea2 0%, #185a9d 100%) !important;
+        color: #fff !important;
+        border: none !important;
+        box-shadow: 0 4px 15px rgba(67, 206, 162, 0.15);
+        transition: background 0.3s, transform 0.2s;
+    }
+    .btn-gradient:hover, .btn-gradient:focus {
+        background: linear-gradient(90deg, #185a9d 0%, #43cea2 100%) !important;
+        transform: translateY(-2px) scale(1.03);
+        color: #fff !important;
+    }
+    .section-title {
+        border-bottom: 2px solid #0d6efd;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        letter-spacing: 0.5px;
+    }
+    .table td, .table th {
+        vertical-align: middle;
+    }
+    .card {
+        margin-bottom: 0 !important;
+    }
+    @media print {
+        .btn {
+            display: none;
+        }
+    }
+</style>
+
+<select class="form-select" id="ocrModel">
+    <option value="pytesseract">Pytesseract OCR Spacy NER</option>
+    <option value="qwen2">Qwen2 AI (Advanced)</option>
+    <option value="azure">Azure Document Intelligence</option>
+</select>
+{% endblock %}
